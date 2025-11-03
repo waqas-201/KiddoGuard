@@ -1,44 +1,61 @@
-// app/onboarding/Onboarding.tsx
+// app/onboarding/ParentProfileSetup.tsx
+
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-export default function Onboarding() {
+
+export default function ParentProfileSetup() {
     const theme = useTheme();
     const router = useRouter();
 
-
-    
-
-   
-
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.colors.background }]}>
+            {/* Header */}
+            <View style={styles.header}>
+                <TouchableOpacity
+                    onPress={() => router.push("/parentflow/onboarding")}
+                    style={styles.backButton}
+                >
+                    <Ionicons
+                        name="arrow-back"
+                        size={24}
+                        color={theme.colors.onSurface}
+                    />
+                </TouchableOpacity>
+            </View>
+
+            {/* Content */}
             <View style={styles.contentContainer}>
                 <Image
-                    source={require("../assets/images/Onboarding.png")}
+                    source={require("../../assets/images/Onboarding.png")}
                     style={styles.image}
                 />
 
                 <Text variant="headlineLarge" style={styles.heading}>
-                    Safe & Sound Screen Time
+                    Create your parent profile
                 </Text>
 
                 <Text
                     variant="bodyMedium"
                     style={[styles.tagline, { color: theme.colors.onSurfaceVariant }]}
                 >
-                    KiddoGuard helps you create a secure digital space for your child.
+                    Face authentication keeps your profile secure. No data is stored
+                    outside your device.
                 </Text>
             </View>
 
+            {/* CTA */}
             <Button
                 mode="contained"
-                onPress={() => router.navigate("/ParentProfile")}
+                onPress={() => {
+                    router.push("/parentflow/nameAndGenderSetup")
+                }}
                 style={[styles.button, { borderRadius: theme.roundness * 2 }]}
-                labelStyle={{ fontFamily: "Poppins-SemiBold" }} // Ensures CTA text feels premium
+                labelStyle={{ fontFamily: "Poppins-SemiBold" }}
             >
-                Get Started
+                Continue
             </Button>
         </SafeAreaView>
     );
@@ -49,13 +66,21 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
         justifyContent: "space-between",
+    },
+    header: {
+        flexDirection: "row",
         alignItems: "center",
+        width: "100%",
+    },
+    backButton: {
+        padding: 8,
     },
     contentContainer: {
-        alignItems: "center",
         flex: 1,
         justifyContent: "center",
+        alignItems: "center",
         width: "100%",
+        paddingHorizontal: 16,
     },
     image: {
         width: "100%",
@@ -66,11 +91,11 @@ const styles = StyleSheet.create({
     },
     heading: {
         textAlign: "center",
-        marginTop: 20,
+        marginBottom: 12,
     },
     tagline: {
         textAlign: "center",
-        marginTop: 16,
+        marginTop: 8,
         lineHeight: 22,
         paddingHorizontal: 24,
     },
